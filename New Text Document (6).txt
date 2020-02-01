@@ -1,0 +1,36 @@
+﻿ARDUINO: 
+
+ReactJS
+NodeJS
+Express
+GraphGL
+.NET
+web scraping,web scrawling
+Portfolio
+Bot
+14 cân vào ra với 6 chân băm xung(0->13)
+Băm xung(chân có dấu ngã):Thay đổi cường độ mong muốn 
+VD:giả sử có cái quạt, ta chọn nó quạt mạnh hay yếu hoặc độ sáng bóng đèn-> băm xung
+A0->A5 6 ngõ vào analog
+
+void setup(){} khai báo biến, thư viện, biến,thiết lập thông số, định nghĩa các chân ...
+void loop(){} lệnh thực thi chương trình(lặp vô tân)
+-setup():pin nào output, pin nào input
+-Serial.begin(9600) yêu cầu send serial data tới máy tính với 9600b/s
+-loop(): repeat as long as has power
+-int sensorValue = analogRead(A0): voltage pin on A0 và lưu tạm thời vào memory và đặt tên là sensorValue
+-Serial.println(serialValue):transmit value từ arduino qua USB cable->computer
+*Analog đo lường với 10bit(0->1023) và thay đổi với voltage
+
+1023->5V
+.
+.
+.
+512 ->2.5V
+.
+.
+.
+0   ->0V
+
+light sensor sẽ detect.
+red blood cell hếp thụ ánh sáng xanh và reflect đỏ

@@ -1,0 +1,19 @@
+﻿tạo project: npx init ...
+khởi tạo package: npm init
+Ktra thiết bị connect: adb devices
+Để dùng firebase cài 2 pack: firebase và react-native-firebase
+Trong 1 component:
+export default class Chart extends Component {
+  render() {//render method
+    let sampleData = [30, 200, 170, 250, 10];
+    return (
+      <View>
+        <PureChart data={sampleData} type="line" />
+      </View>
+    );
+  }
+}
+
+const styles=StyleSheet.create({
+  key:value(object)  
+})

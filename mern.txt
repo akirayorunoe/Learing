@@ -1,0 +1,73 @@
+﻿-ReactJS:client-side(browser) library build highly reactive UI
++render UI with dynamic 
++Handler user input
++communicate with back-end
++provide "modile app" - like UX
+-NodeJS: server-runtime(JS server-side)
++Listen requests + send responses
++Execute Server-side Logic
++Interact with Database + files
++Thường k dùng 1 mình (dùng chung vs express)
+-Express:Node framework which simplified writing Server-side Code and Logic
++Based on Node,offers same Functionalities
++Middleware-based:Funnel(~=pipeline) Requests through functions
++Include routind,Wiew-rendering & more
+-MongoDB:NoSQL Database which stores "Documents" in "Collections" (instead of "Record" in "Table" as in SQL)
++Store Application Data(Users,Products,...)
++Thực thi không ràng buộc(schema hay relations). vẫn có thể thiếp lập relation nhưng lỏng lẻo hơn (no sequel)-> tối ưu performance(flexible), dễ connect tới node/express
+-powerful database which can easily be intergrated into a node/express environment
+Client(Browser)			Server
+reactJS				node/express,mongoDB
+Presentation/UI			Business Logic
+Single-page app			Persistent Datastorage
+				Authentication logic
+		<-request/response->
+		Data:JSON format
+-React SPA:
++Routes(react-router-dom): render component base on path user enter ->Route config+page components: Những component nào sẽ render trên path nào
++State(Hook,Redux): re-render -> Redux Logic,React Hooks,Custom Hooks: state management
++Component+styling(css)->utility/UI 
+-Backend == API:xây dựng node/express app which defines some entry points
+	+REST API:Different URLs+ Http Verbs(=endpoints) for different actions (những dòng sau domain và verb http:GET,POST,PATCH,DELETE)
+	+GRAPHQL API:1 URLs + 1Http verb(POST)(=endpoint) that accept query commands(trong body) tuân thủ standard GraphQL mô tả operation muốn thực thi(don't work with differnt path).Dùng queries to trigger different actions
+*Client -> node/express ->database
+*Client -x-> database
+-REST:
++GET:get resource
++PUT:create / overwrite
++POST:create/append
++PATCH:update
++DELETE:delete
+options:Determine whether folow-up Request is allowd(ent auto)
+-GraphQL: POST /graphql (body contain query expression dc parsed bở node/express)
+VD:
+{
+	query {//operation type
+		user {//other types:mutation(biến đổi),subcription -> operation "end-point":identifier 
+			name//	requested field:Data muốn send
+			age//
+			}
+		}
+} 
+
+*REST API: 
++Request path + http method (="endpoint") identity a resource / action on server
++API is stateless and decoupled from any front-end: có thể kết nối từ bất cứ đâu k nhấn thiết phải là browser(android/IOS)
++The most common type of API because of its ease to use
+*GraphQL
++Query expression identities a resource and action
++API is stateless and decoupled from any front-end: có thể kết nối từ bất cứ đâu k nhấn thiết phải là browser(android/IOS)
++Popular but less common,because you have to learn query language
+
+*2 ways of connecting node + react
++Server hosts Node API + React SPA (domain/api)
+-Node/express handles incoming requests
+-Requests not targetting API routes return React SPA
+-Data is exchanged between React app and node API in JSON format
++2 seperate server
+-Node(express)API handles incoming requests
+-React SPA served from seperate static host(k chạy server side code)
+-Data is exchanged between React app and node API in JSON format
+->Trong 2 TH:Logically Seperate Apps(SPA+API)
+*Cách t3: Dùng node/express server và k build REST/GraphQL API thay vào đó là render HTML page(VD:EJS,Pug...): pre-render HTML control by react in a "widget"-like(phải reloadpage,delay...) 
+
