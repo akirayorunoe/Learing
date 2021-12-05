@@ -228,6 +228,16 @@ functional purity: luôn return value và k có side effect -> Deterministic: b�
 *array.reduce([biến tạm],[phần tử])=>{},[giá trị của biến tạm])
 *Type coercion: VD:1=='1'
 *IIFE: Thực thi hàm ngay lập tức VD: (myFunc(){}) . Chú ý phải có dấu ";" ở trước, khi dùng cách này thì bất cứ gì trong "()" thì sẽ k bị ảnh hưởng ở bên ngoài (private trong OOP)
+-Callback function khi thỏa 
++ Là hàm
++ Dc truyền qua đối số
+VD:function myFunc(param){
+param()
+}
+function myCallback(param){
+...
+}
+myFunc(myCallback)
 
 OBJECT
 -reference type = non-primitive type: chỉ dc tạo bởi programmer, k phải type define sẵn(primitive type)
