@@ -231,6 +231,7 @@ functional purity: luôn return value và k có side effect -> Deterministic: b�
 -Callback function khi thỏa 
 + Là hàm
 + Dc truyền qua đối số
++Dc gọi lại (trong hàm nhận đối số)
 VD:function myFunc(param){
 param()
 }
@@ -238,6 +239,7 @@ function myCallback(param){
 ...
 }
 myFunc(myCallback)
+*Các function trong .map,.filter,.... hiển nhiên dc gọi lại-> cũng là callback
 
 OBJECT
 -reference type = non-primitive type: chỉ dc tạo bởi programmer, k phải type define sẵn(primitive type)
