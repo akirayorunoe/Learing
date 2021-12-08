@@ -310,7 +310,8 @@ Object.fromEntries(userProfiles)
 *for..of:interating(lặp đi lặp lại) array/string, k thể dùng for of cho Object
 *for..in:enumerating(liệt kê) object-properties, nếu dùng for in cho array ta lấy dc index
 *debugger;:khi chạy tới dey-> dừng tại đây
-
+-hasOwnProperty() để ktra thuộc tính đó có phải thuộc tính của obj đó k mà k kế thừa từ prototype. 
+Vd: array có prototype là .check khi kiểm tra qua tất cả index thì chỉ có 0,1,... Chứ k bao gồm check khi thực hiện for/in
 
 WEBSOCKET(socket.io)
 -allow real time communication từ browser ->server cũng như bất cứ ai connect tới server đó
