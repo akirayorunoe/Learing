@@ -240,6 +240,14 @@ function myCallback(param){
 }
 myFunc(myCallback)
 *Các function trong .map,.filter,.... hiển nhiên dc gọi lại-> cũng là callback
+-StopPropagation:
+VD: <div onClick={()=>{}}>
+	<button onClick ={()=>{}}>btn</button>
+	</div>
+Khi ta nhấn vào thằng con thì 2 Dom event sẽ cùng hoạt động (sẽ lan dần ra các element ông, cha). Để tránh điều này ta sửa dụng e.StopPropagarion trong function con (e là mouse event).
+-DOM event: onClick,....
+-event listener: .addEventListener([event],[function]), .removeEventListener([event],[function]) chính vì thế khi dùng event listener ta nên tách function ra rồi gọi đến
+VD:btn.removeEventListener('click',viec1)
 
 OBJECT
 -reference type = non-primitive type: chỉ dc tạo bởi programmer, k phải type define sẵn(primitive type)
