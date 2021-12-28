@@ -195,6 +195,7 @@ JAVASCRIPT:
 +var newFunction=function nameFunction(){}; or var newFunction=function(){};//function expression
 *expression: những thứ sẽ có giá trị trả về
 Sử dụng arrow function để tránh việc trùng lặp hàm vs biến gây bug 
+*Arrow function k thể dùng để tạo constructor function
 VD:const greet = ()=>{}
 *Closure
 VD:
