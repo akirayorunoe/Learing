@@ -410,6 +410,16 @@ Babel->tạo ra để dùng JS features mới theo ECMA mới
 
 ES6
 Destructuring:{[prop muốn lấy từ object],..}=[object muốn lấy]
+VD: var obj={
+a:'1',
+b:	{
+	c:2
+	}
+}
+Khi dùng destructuring:
++var {a,b:{c}} = obj : Khi ta muốn lấy a và c của object b rồi lưu vào biến cùng tên
++var {a,b:{c:d}} = obj :  Khi ta muốn lấy a và c của object b rồi lưu vào biến cùng tên, đồng thời đổi tên c thành d 
++var {a,b:{d = 0}} = obj :  Khi ta muốn lấy a và d của object b rồi lưu vào biến cùng tên, đồng thời gán mặc định giá trị khi không có 
 Dynamic prop: ["tên"]:value
 Nếu prop và value same VD: obj={a:a,b:b} ->obj={a,b}
 function default value: function greet(name="",age=30,pet="cat"){}
