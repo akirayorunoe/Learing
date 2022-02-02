@@ -424,6 +424,9 @@ Dynamic prop: ["tên"]:value
 Nếu prop và value same VD: obj={a:a,b:b} ->obj={a,b}
 function default value: function greet(name="",age=30,pet="cat"){}
 string: `${expression}`
+Trong trường hợp dùng Nullish coalescing operator (??) nó kiểm tra khi vế trái là null hoặc undefined.Trong trường hợp dùng or (||) thì nó kiểm tra rồi trả vế phải bếu có falsy vế trái
+VD:const [jobs,setJobs]=useState(storageJobs ?? [])
+const [jobs1,setJobs1]=useState(storageJobs1 || [])
 
 JAVASCRIPT RUNTIME ENVIRONMENT
 +JS Engine:
