@@ -1017,6 +1017,20 @@ clearInterval(interval)
 *Recommend: khi cần dùng 1 function trong useEffect, ta nên define ngay trong useEffect
 *Vs class related code split thành nhiều different lifecycle method nơi mà unrelated code put together in same lifecycle method->hook có thể dùng nhiều useEffect trong cùng component
 
+#useEffect
+1. Cập nhật lại state
+2. Cập nhật DOM (mutated)
+3. Render lại UI
+4. Gọi cleanup nếu deps thay đổi
+5. Gọi useEffect callback
+
+#useLayoutEffect
+1. Cập nhật lại state
+2. Cập nhật DOM (mutated)
+3. Gọi cleanup nếu deps thay đổi (sync)
+4. Gọi useLayoutEffect callback (sync)
+5. Render lại UI
+
 
 BACK-END.
 Nodejs k phải ngôn ngữ lập trình, k phải framework->là runtime environment để execute JS
