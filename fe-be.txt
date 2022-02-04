@@ -968,7 +968,8 @@ useEffect là 1 function, paramenter đưa vào là function sẽ dc chạy sau 
 VD: useEffect(()=>{.....})
 *Vì điều này, để render khi cần thiết(tránh render lại khi state cũ === state mới) bằng cách đưa vào parameter thứ 2 một array để cho biết prop hay state cần theo dõi(nếu prop hay state trong array này thay đổi->useEffect sẽ execute) và nếu value k thay đổi giữa renders thì useEffect sẽ k run
 VD: useEffect(()=>{.....},[count])
-Để chạy useEffect only once(hay componentDidMount đối vs class) mà k depend vào state nào. Sẽ dc gọi 1 lần duy nhất khi initial render bằng cách truyền parameter thứ 2 là array rỗng -> thể hiện k dựa vào bất cứ state hay props nào nên k cần gọi khi re-render
+Để chạy useEffect only once(hay componentDidMount đối vs class) mà k depend vào state nào. Sẽ dc gọi 1 lần duy nhất khi initial render bằng cách truyền parameter thứ 2 là array rỗng -> thể hiện k dựa vào bất cứ state hay props nào nên k cần gọi khi re-render. 
+*Khi re-render React sẽ so sánh setState của prevState và gtri hiện tại qua === . Vì thế chỉ re-render mỗi khi đổi kiểu dữ liệu và giá trị
 VD: useEffect(()=>{.....},[])
 Để chạy useEffect để unmount(hay componentWillUnmount đối vs class)
 VD: //HookMouse.js
