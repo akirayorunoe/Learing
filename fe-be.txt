@@ -997,6 +997,7 @@ Ta unmount bằng cách return function bên trong funtion dc gọi trong useEff
 VD:useEffect(()=>{
 console.log('useEffect called')
 window.addEventListener('mousemove',logMousePosition)
+//Clean-up function
 return ()=>{console.log('component unmounting code')
 window.removeEventListener('mousemove',logMousePosition)
 }
