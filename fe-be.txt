@@ -1031,6 +1031,43 @@ clearInterval(interval)
 4. Gọi useLayoutEffect callback (sync)
 5. Render lại UI
 
+#useRef
+-Ta có vd sau để start, dừng countdown
+VD: function App(){
+const [count,setCount]=useState(60)
+
+let timeId
+
+const handleStart=()=>{
+timeId=setInterval(()=>{setCount(prevCount=>prevCount-1),1000})
+console.log('Start->',timeId)
+}
+
+const handleStop=()=>{
+clearInterval(timeId)
+console.log('Start->',timeId)
+}
+return (....)
+}
++Khi ta start,pause ngay ban đầu thì sẽ dừng dc, nhưng khi bắt đầu countdown xuống 1 thì k(Lý do khi re-render tạo scope mới (Closure))
+->Xử lý bằng cách đưa biến ra ngoài function cha hoặc dùng useRef
+VD:	function App(){
+const [count,setCount]=useState(60)
+
+const timeId = useRef()
+
+const handleStart=()=>{
+timeId.current = setInterval(()=>{setCount(prevCount=>prevCount-1),1000})
+console.log('Start->',timeId)
+}
+
+const handleStop=()=>{
+clearInterval(timeId.current)
+console.log('Start->',timeId)
+}
+return (....)
+}
+*useRef trả về 1 object: {current: [giá trị]} vì vậy dùng .current để lấy giá trị
 
 BACK-END.
 Nodejs k phải ngôn ngữ lập trình, k phải framework->là runtime environment để execute JS
