@@ -1055,6 +1055,7 @@ VD:	function App(){
 const [count,setCount]=useState(60)
 
 const timeId = useRef()
+const h1Ref = useRef()
 
 const handleStart=()=>{
 timeId.current = setInterval(()=>{setCount(prevCount=>prevCount-1),1000})
@@ -1068,6 +1069,7 @@ console.log('Start->',timeId)
 return (....)
 }
 *useRef trả về 1 object: {current: [giá trị]} vì vậy dùng .current để lấy giá trị
+*<h1 ref={h1Ref}>...</h1> có thể dùng ref để lấy DOM element thay vì getElementById hay querySelector
 
 BACK-END.
 Nodejs k phải ngôn ngữ lập trình, k phải framework->là runtime environment để execute JS
