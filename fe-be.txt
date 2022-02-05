@@ -1183,8 +1183,8 @@ While both useMemo and useCallback remember something between renders until the 
 useMemo will remember the returned value from your function.
 
 useCallback will remember your actual function.
-*A function that returns our function call, and an array of dependencies. Only when one of the dependencies is changed, our function will be called again. useMemo returns the results of that function execution and will store it in memory to prevent the function from running again if the same parameters were used.
-*To prevent our function from being recreated and change pointers on each render round, we can use useCallback. This hook lets us preserve the function, and it will be recreated only when one of its dependencies changes
+*useMemo keeps a function from being executed again if it didn’t receive a set of parameters that were previously used. It returns the results of a function. Use it when you want to prevent some heavy or costly operations from being called on each render.
+*useCallback keep a function from being re-created again, based on a list of dependencies. It returns the function itself. Use it when you want to propagate it to child components, and prevent from a costly function from re-running.
 
 BACK-END.
 Nodejs k phải ngôn ngữ lập trình, k phải framework->là runtime environment để execute JS
