@@ -1069,7 +1069,122 @@ console.log('Start->',timeId)
 return (....)
 }
 *useRef trả về 1 object: {current: [giá trị]} vì vậy dùng .current để lấy giá trị
-*<h1 ref={h1Ref}>...</h1> có thể dùng ref để lấy DOM element thay vì getElementById hay querySelector
+*<input ref={inputRef}>...</input> có thể dùng ref để lấy DOM element thay vì getElementById hay querySelector. Có thể dùng inputRef.current.focus để focus vào element
+
+#React.memo
+-là 1 HOC(higher order Component)
+-Ghi nhớ props component để quyết định re-render lại hay không. Xử lý component, tránh re-render những lúc k cần thiết. Chỉ cần 1 prop thay đổi thì sẽ re-render
+VD: //import trong component con không cần re-render 
+import {memo} from 'react'
+
+function Content(){
+return(...)
+}
+
+export default memo(Content)
+
+#useCallback()
+Tránh tạo ra hàm mới k cần thiết
+VD://App
+function App(){
+const [count,setCount]=useState(0)
+
+const handleIncrease=()=>{
+setCount(count+1)
+}
+
+return (
+<>
+	<Content onInCrease={handleIncrease}/>
+	<p>{count}</p>
+</>
+)
+}
+
+export default App
+
+//Content
+import {memo} from 'react'
+
+function Content({onIncrease}){
+console.log(re-render)
+return(
+<>
+<p>a</p>
+<button onClick={onIncrease}>Click</button>
+</>
+)
+}
+
+export default memo(Content)
+
+->Khi ta chạy, ta thấy Content vẫn re-render dù k cần thiết và dù đã có react memo. Từ đây ta lại có
+VD const a=()=>{}
+const b=()=>{}
+a===b //false
+-> Khi tạo hàm mới sẽ lưu vào tham chiếu mới (reference type)
+Khi chạy hàm tại app, sau khi chạy xong lần đầu, sẽ tạo ra scope mới (hàm handleIncrease với tham chiếu mới hay địa chỉ bộ nhớ) sau đó react memo sẽ so sánh (===) và thấy có sự thay đổi -> re-render
+Để khắc phục:
+VD://App
+import {useState, useCallback} from 'react'
+
+function App(){
+const [count,setCount]=useState(0)
+
+const handleIncrease=useCallback(()=>{
+setCount(count+1)
+},[])
+
+return (
+<>
+	<Content onInCrease={handleIncrease}/>
+	<p>{count}</p>
+</>
+)
+}
+
+export default App
+
+//Content
+import {memo} from 'react'
+
+function Content({onIncrease}){
+console.log(re-render)
+return(
+<>
+<p>a</p>
+<button onClick={onIncrease}>Click</button>
+</>
+)
+}
+
+export default memo(Content)
+->useCallback(callback,[deps]) nếu deps trống thì thay vì khi re-render tạo hàm mới thì return lại chính tham chiếu ban đầu ở lần mount. 
+->Dùng chung vs memo để tối ưu, k có memo thì k dùng
+
+#useMemo()
+-Là 1 hook, tránh thực hiện lại logic k cần thiết
+VD: //tạo ứng dụng tính toán tổng 
+const total = products.reduce((results,prod)=>{
+
+return result+prod.price
+,0}
+->Khi ta nhập thì hàm này cũng sẽ chạy (re-render), chỉ nên trigger khi products đổi. Dùng useMemo(callback,[deps]), nếu deps rỗng chỉ tính toán 1 lần
+VD: //tạo ứng dụng tính toán tổng 
+const total = useMemo(()=> products.reduce((results,prod)=>{
+
+return result+prod.price
+,0}
+,[products])
+*useMemo and useCallback use memoization. Like to think of memoization as remembering something.
+
+While both useMemo and useCallback remember something between renders until the dependancies change, the difference is just what they remember.
+
+useMemo will remember the returned value from your function.
+
+useCallback will remember your actual function.
+*A function that returns our function call, and an array of dependencies. Only when one of the dependencies is changed, our function will be called again. useMemo returns the results of that function execution and will store it in memory to prevent the function from running again if the same parameters were used.
+*To prevent our function from being recreated and change pointers on each render round, we can use useCallback. This hook lets us preserve the function, and it will be recreated only when one of its dependencies changes
 
 BACK-END.
 Nodejs k phải ngôn ngữ lập trình, k phải framework->là runtime environment để execute JS
