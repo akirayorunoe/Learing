@@ -1186,6 +1186,105 @@ useCallback will remember your actual function.
 *useMemo keeps a function from being executed again if it didn’t receive a set of parameters that were previously used. It returns the results of a function. Use it when you want to prevent some heavy or costly operations from being called on each render.
 *useCallback keep a function from being re-created again, based on a list of dependencies. It returns the function itself. Use it when you want to propagate it to child components, and prevent from a costly function from re-running.
 
+#useReducer()
+-Update state khi nhiều state, state nhiều tầng ...
++init State
++Action
++Reducer: là hàm, hoạt động dựa theo nguyên tắt nhận đầu vào và trả đầu ra mới. Hàm chỉ hoạt động khi có dispatch
++Dispatch
+VD:....
+//Init
+const initState = 0
+
+//Actions
+const UP_ACTION='up'
+const DOWN_ACTION='down'
+
+//Reducer
+const reducer=(state,action)=>{
+	switch(action){
+		case UP_ACTION:
+		return state+1;
+		case DOWN_ACTION:
+		return state-1;
+		default:
+		throw new Error('Invalid action')
+	}
+}
+
+function App(){
+
+const [count,dispatch]=useReducer(reducer,initState)
+return (
+<>
+<h1>{count}</h1>
+<button onClick={()=>dispatch(UP_ACTION)}>UP</button>
+<button onClick={()=>dispatch(DOWN_ACTION)}>DOWN</button>
+</>
+)
+}
+
+VD1:
+//initState
+const initState={
+	jobs:[],
+	job:''
+}
+//Actions
+const ADD_JOB='add_job'
+const SET_JOB='set_job'
+const DELETE_JOB='delete_job'
+
+const setJob=payload=>{
+type:SET_JOB,
+payload
+}
+
+const addJob=payload=>{
+type:ADD_JOB,
+payload
+}
+//Reducer
+
+const reducer=(state,action){
+switch(action){
+		case ADD_JOB:
+		return {...state,jobs:[...state.jobs,action.payload]};
+		case SET_JOB:
+		return {...state,job:action.payload};
+		default:
+		throw new Error('Invalid action')
+	}
+} 
+
+function App(){
+const [state,dispatch]=useReducer(reducer,initState)
+const {job,jobs} = state
+
+const handleSubmit = () =>{
+dispatch(addJob(job))
+}
+
+return (
+<>
+<input 
+value={job}
+onChange={e=>{
+dispatch(setJob(e.target.value))
+}
+}
+placeholder="Enter todo..."/>
+<button onClick={handleSubmit}>Add</button>
+<ul>
+{jobs.map((job,index)=>
+<li key={index}>job &times;</li>
+)}
+</ul>
+</>
+)
+}
+
+
 BACK-END.
 Nodejs k phải ngôn ngữ lập trình, k phải framework->là runtime environment để execute JS
 javascript ban đầu chỉ chạy trên browser, các trình duyệt sử dụng JS engine của mình để convert sang ngôn ngữ máy-> xử lý khác nhau
