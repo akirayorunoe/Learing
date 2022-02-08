@@ -427,6 +427,16 @@ string: `${expression}`
 Trong trường hợp dùng Nullish coalescing operator (??) nó kiểm tra khi vế trái là null hoặc undefined.Trong trường hợp dùng or (||) thì nó kiểm tra rồi trả vế phải bếu có falsy vế trái
 VD:const [jobs,setJobs]=useState(storageJobs ?? [])
 const [jobs1,setJobs1]=useState(storageJobs1 || [])
+*Để deep copy array/object ta dùng spread operator hoặc Object.assign. Nếu Object/array lồng nhau, ta dùng JSON stringtify r parse
+VD:const a = {
+  languages: {
+    vi: 'Xin chào'
+  }
+}
+let b = JSON.parse(JSON.stringify(a))
+b.languages.vi = 'Chao xìn'
+console.log(b.languages.vi) // Chao xìn
+console.log(a.languages.vi) // Xin chào
 
 JAVASCRIPT RUNTIME ENVIRONMENT
 +JS Engine:
@@ -1225,6 +1235,19 @@ return (
 }
 
 VD1:
+//logger.js-middleware để log
+function logger(reducer){
+return (prevState,action) =>{
+	console.group(action.type)//nhóm lại theo action
+	console.log('Prev state')
+	const newState=reducer(prevState,action)
+	console.groupEnd()
+	return newState
+}
+}
+
+export default logger
+
 //initState
 const initState={
 	jobs:[],
@@ -1244,30 +1267,43 @@ const addJob=payload=>{
 type:ADD_JOB,
 payload
 }
-//Reducer
 
+const deleteJob=payload=>{
+type:DELETE_JOB,
+payload
+}
+
+//Reducer
 const reducer=(state,action){
 switch(action){
 		case ADD_JOB:
 		return {...state,jobs:[...state.jobs,action.payload]};
 		case SET_JOB:
 		return {...state,job:action.payload};
+		case DELETE_JOB:
+		const newJobs=[...state.jobs] //deep copy
+		newJobs.splice(action.payload,1)
+		return {...state,jobs:newJobs}
 		default:
 		throw new Error('Invalid action')
 	}
 } 
 
 function App(){
-const [state,dispatch]=useReducer(reducer,initState)
+const [state,dispatch]=useReducer(logger(reducer),initState)
 const {job,jobs} = state
+const inputRef=useRef()
 
 const handleSubmit = () =>{
 dispatch(addJob(job))
+dispatch(setJob(''))//clear field
+inputRef.current.focus()
 }
 
 return (
 <>
 <input 
+ref={inputRef}
 value={job}
 onChange={e=>{
 dispatch(setJob(e.target.value))
@@ -1277,13 +1313,57 @@ placeholder="Enter todo..."/>
 <button onClick={handleSubmit}>Add</button>
 <ul>
 {jobs.map((job,index)=>
-<li key={index}>job &times;</li>
+<li key={index}>job 
+<span onClick={()=>dispatch(deleteJob(index))}>&times;</span></li>
 )}
 </ul>
 </>
 )
 }
 
+#context & useContext()
+-Đơn giản hóa truyền dữ liệu từ component cha -> con mà k dùng props. Comp A => Comp B => Comp C
++Create context: tạo phạm vi giúp truyền data tới A bất cứ component con nào của A
++Provider: Nhận data truyền, dùng ở component cha
++Consumer: Để nhận dc
+VD: //ThemeContext.js
+import {createContext,useState} from 'react'
+export const ThemeContext = createContext()//Trả về Object có consumer, provider
+
+function ThemeProvider({child}){
+const [theme,setTheme]=useState('dark')
+const toggleTheme=()=>{
+setTheme(theme==='dark'?'light':'dark')
+}
+const value={
+theme,
+toggleTheme
+}
+return (
+<ThemeContext.Provider value>{children}</ThemeContext.Provider>//Toàn bộ child có thể nhận dc value={value}
+)
+}
+
+//Import {ThemeProvider} ở index.js
+
+//App.js
+import {useContext} from 'react'
+import {ThemeContext} from './App'
+function App(){
+const context=useContext(ThemeContext)
+...
+return 
+<button onClick={context.toggleTheme}></button>
+}
+
+//Component con dc nhận data
+import {useContext} from 'react'
+import {ThemeContext} from './App'
+
+funtion Paragraph(){
+const context=useContext(ThemeContext)
+return <p class={context.theme}></p>
+}
 
 BACK-END.
 Nodejs k phải ngôn ngữ lập trình, k phải framework->là runtime environment để execute JS
